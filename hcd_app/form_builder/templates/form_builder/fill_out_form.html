@@ -1,0 +1,79 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{selected_form.title}}</title>
+    <link rel="stylesheet" href="{% static 'form_builder/styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'form_builder/styles/starter.css' %}">
+ 
+</head>
+<body>
+    <div id="nav">
+        <img src="{% static 'form_builder/images/HCD_home.png' %}" >
+        <div id="nav-links">
+        <a href="{% url 'all-programs'  %}">About</a>
+        <a href="{% url 'build_question_view' 5 %}">Resources</a>
+        <a href="{% url 'fill_out_form' 5 0 0 %}"><strong class="nav-active">Survey</strong></a>
+        </div>
+    </div> 
+    <header>Housing Assistance Quiz</header>
+    <main>
+        {% for key, value in forms.items %}
+        {% if current_form == key %}
+      <article style="display: flex; align-items: center; flex-direction: column; justify-content: center;">
+        <h1 class="question-number">Question #{{key|add:1}} of #{{last_form|add:1}}</h1>
+        <form action="{% url 'fill_out_form' 5 current_form 0 %}" method="POST">
+            {% csrf_token %}
+            <div style="display: flex; flex-direction: row; width: 650px;  align-items: center; justify-content: space-between; margin-top: 1em;">
+             {% if value.1 == 'address_form' %}
+             <div style="margin-bottom : -80px; margin-top: 20px; display: flex; flex-direction: column; width: 650px;  align-items: center; justify-content: center;">
+            {{value.0}}
+            </div>
+            </div>
+             {% else %}
+             <div style="display: flex; flex-direction: column; align-items: left; justify-content: center;">
+             <p> {{value.1}}</p>
+             {% endif %}
+            {{value.0.question}}
+            {{ value.0.answer}}
+            </div>
+            {% if value.2 != 'None' %}
+           <img src = "{% static value.2 %}"   width="250" 
+           height="250">
+            {% endif %}
+           </div>
+           <div class="button-container"> 
+                <input class="back-button" type=button value="Back" onClick="javascript:history.go(-1);">
+           
+            {% if key == last_form %}
+            <div id ="registration-actions">
+                <button class="submit-button">Submit</button>
+            </div>
+            
+            {% else %}
+            <div id ="registration-actions">
+                <button class="next-button">Next</button>
+            </div>
+            {% endif %}
+           
+        </div>
+        </form> 
+      
+        
+    </article>
+        {% endif %}
+        {% endfor %}
+        <br>
+        <!-- <div id ="registration-actions">
+        <a href="/form_builder/program_options/{{5}}" class="btn">return to program options</a>
+        <a href="/form_builder/" class="btn">return to programs</a>
+        </div> -->
+  
+    </main>
+
+</body>
+</html>

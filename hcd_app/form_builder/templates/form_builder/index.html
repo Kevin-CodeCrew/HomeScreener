@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{selected_form.title}}</title>
+    <link rel="stylesheet" href="{% static 'form_builder/styles/base.css' %}">
+  
+   
+  
+</head>
+<body>
+    <div id="nav">
+        <img src="{% static 'form_builder/images/HCD_home.png' %}" >
+        <div id="nav-links">
+        <a href="{% url 'all-programs'  %}"><strong class="nav-active">About</strong></a>
+        <a href="{% url 'build_question_view' 5 %}">Resources</a>
+        <a href="{% url 'fill_out_form' 5 0 0 %}">Survey</a>
+        </div>
+    </div>
+    <main>
+    <article>
+   
+        <div class="container">
+            <header>Housing Assistance Quiz</header>
+            <p class="intro">If you are a resident of Shelby County, Tennessee and your home requires repairs, you maybe able to get assistance.<br/><br/>Take this short quiz to find out what programs you may qualify for.<b> It should take less than 2 minutes.</b></p>
+             <a href="{% url 'fill_out_form' 5 0 0 %}"><button>GET STARTED</button></a>
+    </div>
+        
+    </article>
+    </main>
+    </body>
+</html>
